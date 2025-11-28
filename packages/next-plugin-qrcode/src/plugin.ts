@@ -1,7 +1,8 @@
 import qr from 'qrcode-terminal';
-import os from 'os';
 import type { Compiler } from 'webpack';
 import { cyan, red } from './utils/colors';
+import { getLocalIP, buildURL } from './utils/helper';
+import { validatePort, validatePath } from './utils/validation';
 import { QRCodePluginOptions } from './type';
 
 const DEFAULT_PORT = 3000;
@@ -33,26 +34,13 @@ export class QRCodePlugin {
 	 * @param options - Plugin configuration options
 	 */
 	constructor(options: QRCodePluginOptions = {}) {
-		this.port = options.port || Number(process.env.PORT) || DEFAULT_PORT;
-		this.path = options.path || '';
+		this.port = options.port ?? (Number(process.env.PORT) || DEFAULT_PORT);
+		this.path = options.path ?? '';
+
+		validatePort(this.port);
+		validatePath(this.path);
 	}
 
-	private getLocalIP(): string | null {
-		const interfaces = os.networkInterfaces();
-		for (const name of Object.keys(interfaces)) {
-			for (const iface of interfaces[name] ?? []) {
-				if (iface.family === 'IPv4' && !iface.internal) {
-					return iface.address;
-				}
-			}
-		}
-		return null;
-	}
-
-	private getURL(ip: string): string {
-		const path = this.path.startsWith('/') ? this.path : `/${this.path}`;
-		return `http://${ip}:${this.port}${this.path ? path : ''}`;
-	}
 
 	private printQRCode(url: string): void {
 		console.log('Visit page on mobile:');
@@ -67,12 +55,12 @@ export class QRCodePlugin {
 	 */
 	apply(compiler: Compiler): void {
 		compiler.hooks.environment.tap('QRCodePlugin', () => {
-			const ip = this.getLocalIP();
+			const ip = getLocalIP();
 			if (!ip) {
 				console.log(red('Error: No local IP found'));
 				return;
 			}
-			const url = this.getURL(ip);
+			const url = buildURL(ip, this.port, this.path);
 			this.printQRCode(url);
 		});
 	}
