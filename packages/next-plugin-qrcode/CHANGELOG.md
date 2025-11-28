@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 (2025-11-28)
+
+### Documentation
+
+- Add webpack/Turbopack compatibility note in README
+
 ## 0.1.0 (2025-11-28)
 
 First stable release

@@ -2,6 +2,8 @@
 
 Show QR code on Next.js dev server start.
 
+This plugin works with **webpack only**.
+
 > Inspired by [vite-plugin-qrcode](https://github.com/svitejs/vite-plugin-qrcode) for Vite.
 
 ## Installation
