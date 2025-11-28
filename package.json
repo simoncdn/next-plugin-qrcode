@@ -1,0 +1,10 @@
+{
+	"name": "next-plugin-qrcode-monorepo",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"build": "pnpm --filter next-plugin-qrcode build",
+		"dev": "pnpm --filter next-plugin-qrcode dev",
+		"playground": "pnpm --filter playground-basic dev"
+	}
+}
