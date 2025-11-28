@@ -37,7 +37,7 @@ Start your dev server:
 npm run dev
 ```
 
-The QR code will be displayed in your terminal. Scan it with your mobile device to quickly access your Next.js app on the local network.
+<img width="399" height="405" alt="Image" src="https://github.com/user-attachments/assets/9b70b75a-14e8-4395-9cb7-5aa69b8ddd26" />
 
 ## Configuration
 
